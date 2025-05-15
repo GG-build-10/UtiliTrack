@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Download, FileDown, Filter, SlidersHorizontal, Calendar } from "lucide-react"
-import { mockBillsByMonth, mockBills } from "@/lib/mock-data"
 import { formatCurrency, formatDate } from "@/lib/utils"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
@@ -23,6 +22,7 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import { useAppState } from "@/lib/state-context"
 
 export function HistoryView() {
   // Get current month in YYYY-MM format for default selection
@@ -31,9 +31,10 @@ export function HistoryView() {
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`
   }
 
+  const { bills, billsByMonth } = useAppState()
   const [selectedMonth, setSelectedMonth] = useState(getCurrentMonthKey())
   const [viewType, setViewType] = useState("monthly")
-  const months = Object.keys(mockBillsByMonth)
+  const months = Object.keys(billsByMonth)
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null)
 
   // Custom date range state
@@ -44,8 +45,8 @@ export function HistoryView() {
   // Check if there's data for the selected month
   useEffect(() => {
     if (viewType === "monthly") {
-      const bills = mockBillsByMonth[selectedMonth]
-      if (!bills || bills.length === 0) {
+      const monthBills = billsByMonth[selectedMonth]
+      if (!monthBills || monthBills.length === 0) {
         setNoDataMessage(`No bills found for ${formatMonthDisplay(selectedMonth)}`)
       } else {
         setNoDataMessage(null)
@@ -53,7 +54,7 @@ export function HistoryView() {
     } else {
       setNoDataMessage(null)
     }
-  }, [selectedMonth, viewType])
+  }, [selectedMonth, viewType, billsByMonth])
 
   // Set default date range when dialog opens
   useEffect(() => {
@@ -190,7 +191,7 @@ export function HistoryView() {
             </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {mockBillsByMonth[selectedMonth]?.map((bill) => (
+              {billsByMonth[selectedMonth]?.map((bill) => (
                 <Card key={bill.id}>
                   <CardContent className="p-4">
                     <div className="flex justify-between items-start">
@@ -233,7 +234,7 @@ export function HistoryView() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {mockBills.map((bill) => (
+                {bills.map((bill) => (
                   <TableRow key={bill.id}>
                     <TableCell className="font-medium">{bill.provider}</TableCell>
                     <TableCell>{bill.type}</TableCell>

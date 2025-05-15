@@ -4,11 +4,13 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { MainNav } from "@/components/main-nav"
 import { ThemeProvider } from "@/components/theme-provider"
+import { StateProvider } from "@/lib/state-context"
+import { AuthProvider } from "@/components/auth/auth-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Utility Bill Tracker",
+  title: "UtiliTrack",
   description: "Track and manage your utility bills",
     generator: 'v0.dev'
 }
@@ -22,10 +24,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <div className="flex min-h-screen flex-col">
-            <MainNav />
-            <main className="flex-1">{children}</main>
-          </div>
+          <AuthProvider>
+            <StateProvider>
+              <div className="flex min-h-screen flex-col">
+                <MainNav />
+                <main className="flex-1">{children}</main>
+              </div>
+            </StateProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

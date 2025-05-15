@@ -10,12 +10,67 @@ import {
   YAxis,
   LabelList,
 } from "@/components/ui/chart"
-import { mockUtilityTypeData } from "@/lib/mock-data"
+import { useState, useEffect } from "react"
+import { useAuth } from "@/components/auth/auth-provider"
+import { getBillStatistics } from "@/lib/bill-service"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export function UtilityTypeChart() {
+  const { user } = useAuth()
+  const [data, setData] = useState<{ name: string; value: number }[]>([])
+  const [loading, setLoading] = useState(true)
+  const [isEmpty, setIsEmpty] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user) return
+
+      try {
+        const stats = await getBillStatistics(user.id)
+        // Transform type data to the format expected by the chart
+        const typeData = stats.byType.map((item) => ({
+          name: item.type.charAt(0).toUpperCase() + item.type.slice(1),
+          value: Number(item.amount),
+        }))
+
+        if (typeData.length === 0) {
+          setIsEmpty(true)
+        } else {
+          setData(typeData)
+        }
+      } catch (error) {
+        console.error("Error fetching utility type data:", error)
+        setIsEmpty(true)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [user])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Skeleton className="h-[300px] w-full" />
+      </div>
+    )
+  }
+
+  if (isEmpty) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <p className="text-muted-foreground mb-2">No utility type data available yet</p>
+        <p className="text-sm text-center text-muted-foreground">
+          Upload your first bill to see utility type statistics here
+        </p>
+      </div>
+    )
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <BarChart data={mockUtilityTypeData}>
+      <BarChart data={data}>
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
         <XAxis dataKey="name" />
         <YAxis />

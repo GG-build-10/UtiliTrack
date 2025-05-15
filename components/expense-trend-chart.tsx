@@ -11,11 +11,59 @@ import {
   YAxis,
 } from "@/components/ui/chart"
 import { mockTrendData } from "@/lib/mock-data"
+import { useState, useEffect } from "react"
+import { useAuth } from "@/components/auth/auth-provider"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export function ExpenseTrendChart() {
+  const { user } = useAuth()
+  const [loading, setLoading] = useState(true)
+  const [isEmpty, setIsEmpty] = useState(false)
+  const [data, setData] = useState(mockTrendData)
+
+  useEffect(() => {
+    const checkUserData = async () => {
+      if (!user) return
+
+      try {
+        // Check if user has bills
+        const hasUserBills = localStorage.getItem(`user-${user.id}-has-bills`) === "true"
+
+        if (!hasUserBills) {
+          setIsEmpty(true)
+        }
+      } catch (error) {
+        console.error("Error checking user data:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    checkUserData()
+  }, [user])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Skeleton className="h-[300px] w-full" />
+      </div>
+    )
+  }
+
+  if (isEmpty) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <p className="text-muted-foreground mb-2">No expense trend data available yet</p>
+        <p className="text-sm text-center text-muted-foreground">
+          Upload bills over time to see your expense trends here
+        </p>
+      </div>
+    )
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <AreaChart data={mockTrendData}>
+      <AreaChart data={data}>
         <defs>
           <linearGradient id="colorElectricity" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#678d65" stopOpacity={0.7} />
