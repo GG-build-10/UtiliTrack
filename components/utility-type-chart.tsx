@@ -26,14 +26,14 @@ export function UtilityTypeChart() {
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             border: "none",
           }}
-          formatter={(value) => [`$${value}`, "Amount"]}
+          formatter={(value) => [`€${value}`, "Amount"]}
         />
-        <Bar dataKey="value" fill="#10b981" radius={[4, 4, 0, 0]} barSize={40} animationDuration={1500}>
+        <Bar dataKey="value" fill="#b79374" radius={[4, 4, 0, 0]} barSize={40} animationDuration={1500}>
           <LabelList
             dataKey="value"
             position="top"
             formatter={(value) => `€${value}`}
-            style={{ fill: "#10b981", fontWeight: "bold", fontSize: "12px" }}
+            style={{ fill: "#b79374", fontWeight: "bold", fontSize: "12px" }}
           />
         </Bar>
       </BarChart>

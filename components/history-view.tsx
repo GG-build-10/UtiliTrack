@@ -9,10 +9,20 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Download, FileDown, Filter, SlidersHorizontal } from "lucide-react"
+import { Download, FileDown, Filter, SlidersHorizontal, Calendar } from "lucide-react"
 import { mockBillsByMonth, mockBills } from "@/lib/mock-data"
 import { formatCurrency, formatDate } from "@/lib/utils"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 
 export function HistoryView() {
   // Get current month in YYYY-MM format for default selection
@@ -25,6 +35,11 @@ export function HistoryView() {
   const [viewType, setViewType] = useState("monthly")
   const months = Object.keys(mockBillsByMonth)
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null)
+
+  // Custom date range state
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
+  const [customRangeDialogOpen, setCustomRangeDialogOpen] = useState(false)
 
   // Check if there's data for the selected month
   useEffect(() => {
@@ -40,9 +55,24 @@ export function HistoryView() {
     }
   }, [selectedMonth, viewType])
 
+  // Set default date range when dialog opens
+  useEffect(() => {
+    if (customRangeDialogOpen) {
+      const today = new Date()
+      const threeMonthsAgo = new Date()
+      threeMonthsAgo.setMonth(today.getMonth() - 3)
+
+      setStartDate(threeMonthsAgo.toISOString().split("T")[0])
+      setEndDate(today.toISOString().split("T")[0])
+    }
+  }, [customRangeDialogOpen])
+
   const handleExport = (type: string) => {
     if (type === "monthly") {
-      alert(`Exporting bills for ${selectedMonth}...`)
+      alert(`Exporting bills for ${formatMonthDisplay(selectedMonth)}...`)
+    } else if (type === "custom") {
+      alert(`Exporting bills from ${formatDate(startDate)} to ${formatDate(endDate)}...`)
+      setCustomRangeDialogOpen(false)
     } else {
       alert("Exporting all bills...")
     }
@@ -95,8 +125,53 @@ export function HistoryView() {
                   <FileDown className="mr-2 h-4 w-4" />
                   Export {viewType === "monthly" ? "Month" : "All"}
                 </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCustomRangeDialogOpen(true)}>
+                  <Calendar className="mr-2 h-4 w-4" />
+                  Custom Date Range
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            <Dialog open={customRangeDialogOpen} onOpenChange={setCustomRangeDialogOpen}>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Export Custom Date Range</DialogTitle>
+                  <DialogDescription>Select a date range to export bills from that period.</DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="start-date" className="text-right">
+                      Start Date
+                    </Label>
+                    <Input
+                      id="start-date"
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="end-date" className="text-right">
+                      End Date
+                    </Label>
+                    <Input
+                      id="end-date"
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      className="col-span-3"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setCustomRangeDialogOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => handleExport("custom")}>Export</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
 
             <Button variant="outline" onClick={() => handleExport(viewType)}>
               <Download className="mr-2 h-4 w-4" />

@@ -4,7 +4,7 @@ import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "@/com
 import { mockUtilityTypeData } from "@/lib/mock-data"
 
 export function ExpenseDistributionChart() {
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"]
+  const COLORS = ["#678d65", "#b79374", "#cf8766", "#9dab4c", "#a67e5d"]
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -33,7 +33,7 @@ export function ExpenseDistributionChart() {
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             border: "none",
           }}
-          formatter={(value) => [`$${value}`, "Amount"]}
+          formatter={(value) => [`€${value}`, "Amount"]}
         />
         <Legend />
       </PieChart>

@@ -28,12 +28,12 @@ export function ProviderChart() {
           }}
           formatter={(value) => [`€${value}`, "Amount"]}
         />
-        <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} animationDuration={1500}>
+        <Bar dataKey="value" fill="#678d65" radius={[4, 4, 0, 0]} barSize={40} animationDuration={1500}>
           <LabelList
             dataKey="value"
             position="top"
             formatter={(value) => `€${value}`}
-            style={{ fill: "#3b82f6", fontWeight: "bold", fontSize: "12px" }}
+            style={{ fill: "#678d65", fontWeight: "bold", fontSize: "12px" }}
           />
         </Bar>
       </BarChart>

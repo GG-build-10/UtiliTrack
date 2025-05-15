@@ -22,7 +22,7 @@ export function MonthlyComparisonChart() {
     <ResponsiveContainer width="100%" height="100%">
       <LineChart data={mockMonthlyComparisonData}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
+        <XAxis dataKey="month" tickFormatter={(value) => value} />
         <YAxis />
         <Tooltip
           contentStyle={{
@@ -34,19 +34,19 @@ export function MonthlyComparisonChart() {
           formatter={(value) => [`€${value}`, "Amount"]}
         />
         <Legend />
-        <ReferenceLine y={average} stroke="#FF8042" strokeDasharray="3 3" label="Average" />
+        <ReferenceLine y={average} stroke="#cf8766" strokeDasharray="3 3" label="Average" />
         <Line
           type="monotone"
           dataKey="value"
-          stroke="#f59e0b"
+          stroke="#c7734d"
           strokeWidth={2}
           name="Monthly Expense"
-          dot={{ stroke: "#f59e0b", strokeWidth: 2, r: 4, fill: "#fff" }}
-          activeDot={{ r: 6, fill: "#f59e0b" }}
+          dot={{ stroke: "#c7734d", strokeWidth: 2, r: 4, fill: "#fff" }}
+          activeDot={{ r: 6, fill: "#c7734d" }}
           label={{
             position: "top",
             formatter: (value) => `€${value}`,
-            style: { fill: "#f59e0b", fontSize: 12, fontWeight: "bold" },
+            style: { fill: "#c7734d", fontSize: 12, fontWeight: "bold" },
           }}
         />
       </LineChart>

@@ -19,7 +19,7 @@ export default function Home() {
           <Button
             asChild
             size="lg"
-            className="bg-teal-600 hover:bg-teal-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg h-auto w-full sm:w-auto max-w-xs mx-auto"
+            className="bg-sage-600 hover:bg-sage-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg h-auto w-full sm:w-auto max-w-xs mx-auto rounded-full shadow-md transition-all duration-200 hover:shadow-lg"
           >
             <Link href="/upload" className="flex items-center justify-center">
               <PlusCircle className="mr-2 h-5 w-5" />

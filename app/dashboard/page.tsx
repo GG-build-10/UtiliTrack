@@ -20,18 +20,18 @@ export default function DashboardPage() {
       <DashboardMetrics />
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
+        <Card className="bg-gradient-to-br from-sage-50 to-sage-100 dark:from-sage-950 dark:to-sage-900">
           <CardHeader>
-            <CardTitle className="text-blue-700 dark:text-blue-300">Cost by Provider</CardTitle>
+            <CardTitle className="text-sage-700 dark:text-sage-300">Cost by Provider</CardTitle>
             <CardDescription>Total expenses grouped by service provider</CardDescription>
           </CardHeader>
           <CardContent className="h-80">
             <ProviderChart />
           </CardContent>
         </Card>
-        <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900">
+        <Card className="bg-gradient-to-br from-clay-50 to-clay-100 dark:from-clay-950 dark:to-clay-900">
           <CardHeader>
-            <CardTitle className="text-green-700 dark:text-green-300">Cost by Utility Type</CardTitle>
+            <CardTitle className="text-clay-700 dark:text-clay-300">Cost by Utility Type</CardTitle>
             <CardDescription>Total expenses grouped by utility type</CardDescription>
           </CardHeader>
           <CardContent className="h-80">
@@ -40,9 +40,9 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900">
+      <Card className="bg-gradient-to-br from-olive-50 to-olive-100 dark:from-olive-950 dark:to-olive-900">
         <CardHeader>
-          <CardTitle className="text-purple-700 dark:text-purple-300">Expense Trends</CardTitle>
+          <CardTitle className="text-olive-700 dark:text-olive-300">Expense Trends</CardTitle>
           <CardDescription>Monthly expense trends over time</CardDescription>
         </CardHeader>
         <CardContent className="h-80">
@@ -51,18 +51,18 @@ export default function DashboardPage() {
       </Card>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-950 dark:to-amber-900">
+        <Card className="bg-gradient-to-br from-terracotta-50 to-terracotta-100 dark:from-terracotta-950 dark:to-terracotta-900">
           <CardHeader>
-            <CardTitle className="text-amber-700 dark:text-amber-300">Monthly Comparison</CardTitle>
+            <CardTitle className="text-terracotta-700 dark:text-terracotta-300">Monthly Comparison</CardTitle>
             <CardDescription>Compare expenses across months</CardDescription>
           </CardHeader>
           <CardContent className="h-80">
             <MonthlyComparisonChart />
           </CardContent>
         </Card>
-        <Card className="bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-950 dark:to-teal-900">
+        <Card className="bg-gradient-to-br from-clay-50 to-clay-100 dark:from-clay-950 dark:to-clay-900">
           <CardHeader>
-            <CardTitle className="text-teal-700 dark:text-teal-300">Expense Distribution</CardTitle>
+            <CardTitle className="text-clay-700 dark:text-clay-300">Expense Distribution</CardTitle>
             <CardDescription>Breakdown of expenses by category</CardDescription>
           </CardHeader>
           <CardContent className="h-80">

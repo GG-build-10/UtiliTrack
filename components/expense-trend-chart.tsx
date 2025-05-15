@@ -18,23 +18,23 @@ export function ExpenseTrendChart() {
       <AreaChart data={mockTrendData}>
         <defs>
           <linearGradient id="colorElectricity" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            <stop offset="5%" stopColor="#678d65" stopOpacity={0.7} />
+            <stop offset="95%" stopColor="#678d65" stopOpacity={0.1} />
           </linearGradient>
           <linearGradient id="colorWater" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+            <stop offset="5%" stopColor="#b79374" stopOpacity={0.7} />
+            <stop offset="95%" stopColor="#b79374" stopOpacity={0.1} />
           </linearGradient>
           <linearGradient id="colorGas" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#ffc658" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#ffc658" stopOpacity={0} />
+            <stop offset="5%" stopColor="#cf8766" stopOpacity={0.7} />
+            <stop offset="95%" stopColor="#cf8766" stopOpacity={0.1} />
           </linearGradient>
           <linearGradient id="colorInternet" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#ff8042" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#ff8042" stopOpacity={0} />
+            <stop offset="5%" stopColor="#9dab4c" stopOpacity={0.7} />
+            <stop offset="95%" stopColor="#9dab4c" stopOpacity={0.1} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="month" />
+        <XAxis dataKey="month" tickFormatter={(value) => value} />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip
@@ -44,43 +44,47 @@ export function ExpenseTrendChart() {
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             border: "none",
           }}
-          formatter={(value) => [`$${value}`, ""]}
+          formatter={(value) => [`€${value}`, ""]}
         />
         <Legend />
         <Area
           type="monotone"
           dataKey="electricity"
-          stroke="#8884d8"
-          fillOpacity={1}
+          stroke="#527a50"
+          strokeWidth={2.5}
+          fillOpacity={0.8}
           fill="url(#colorElectricity)"
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 8, strokeWidth: 2 }}
           name="Electricity"
         />
         <Area
           type="monotone"
           dataKey="water"
-          stroke="#82ca9d"
-          fillOpacity={1}
+          stroke="#8c6a4e"
+          strokeWidth={2.5}
+          fillOpacity={0.8}
           fill="url(#colorWater)"
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 8, strokeWidth: 2 }}
           name="Water"
         />
         <Area
           type="monotone"
           dataKey="gas"
-          stroke="#ffc658"
-          fillOpacity={1}
+          stroke="#b35f34"
+          strokeWidth={2.5}
+          fillOpacity={0.8}
           fill="url(#colorGas)"
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 8, strokeWidth: 2 }}
           name="Gas"
         />
         <Area
           type="monotone"
           dataKey="internet"
-          stroke="#ff8042"
-          fillOpacity={1}
+          stroke="#7f8c33"
+          strokeWidth={2.5}
+          fillOpacity={0.8}
           fill="url(#colorInternet)"
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 8, strokeWidth: 2 }}
           name="Internet"
         />
       </AreaChart>
