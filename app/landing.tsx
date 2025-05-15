@@ -34,11 +34,11 @@ export function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-sage-50 to-sage-100 dark:from-sage-950 dark:to-sage-900 py-16 md:py-24">
+      <section className="bg-gradient-to-br from-sage-50 to-sage-100 dark:from-sage-950 dark:to-sage-900 py-12 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-sage-900 dark:text-sage-50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="space-y-4 md:space-y-6">
+              <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-sage-900 dark:text-sage-50">
                 Track Your Utility Bills <span className="text-sage-600 dark:text-sage-400">Effortlessly</span>
               </h1>
               <p className="text-lg md:text-xl text-sage-700 dark:text-sage-300">
@@ -48,7 +48,7 @@ export function LandingPage() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
-                  className="bg-sage-600 hover:bg-sage-700 text-white px-6 py-6 text-lg h-auto rounded-full shadow-md transition-all duration-200 hover:shadow-lg"
+                  className="bg-sage-600 hover:bg-sage-700 text-white px-6 py-6 text-lg h-auto rounded-full shadow-md transition-all duration-200 hover:shadow-lg w-full sm:w-auto"
                   onClick={() => document.getElementById("sign-in-section")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   Get Started
@@ -56,9 +56,9 @@ export function LandingPage() {
                 </Button>
               </div>
             </div>
-            <div className="relative h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-xl bg-white dark:bg-gray-800">
+            <div className="relative h-[250px] sm:h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-xl bg-white dark:bg-gray-800 mt-6 md:mt-0">
               {/* Custom dashboard visualization */}
-              <div className="absolute inset-0 p-6 flex flex-col">
+              <div className="absolute inset-0 p-4 sm:p-6 flex flex-col">
                 <div className="flex items-center justify-between mb-4">
                   <div className="bg-sage-100 dark:bg-sage-800 rounded-md px-3 py-1.5 text-sage-700 dark:text-sage-300 font-medium text-sm">
                     Dashboard
@@ -73,7 +73,7 @@ export function LandingPage() {
                 {/* Charts area */}
                 <div className="grid grid-cols-2 gap-4 flex-1">
                   {/* Expense chart */}
-                  <div className="bg-sage-50 dark:bg-gray-700 rounded-lg p-3 flex flex-col">
+                  <div className="bg-sage-50 dark:bg-gray-700 rounded-lg p-2 sm:p-3 flex flex-col">
                     <div className="text-xs font-medium mb-2 text-sage-700 dark:text-sage-300">Monthly Expenses</div>
                     <div className="flex-1 flex items-end space-x-1">
                       <div className="flex-1 bg-sage-300 dark:bg-sage-600 rounded-t-sm" style={{ height: "60%" }}></div>
@@ -86,12 +86,12 @@ export function LandingPage() {
                   </div>
 
                   {/* Pie chart */}
-                  <div className="bg-sage-50 dark:bg-gray-700 rounded-lg p-3 flex flex-col">
+                  <div className="bg-sage-50 dark:bg-gray-700 rounded-lg p-2 sm:p-3 flex flex-col">
                     <div className="text-xs font-medium mb-2 text-sage-700 dark:text-sage-300">
                       Expense Distribution
                     </div>
                     <div className="flex-1 flex items-center justify-center">
-                      <div className="relative w-24 h-24">
+                      <div className="relative w-16 h-16 sm:w-24 sm:h-24">
                         <div
                           className="absolute inset-0 rounded-full border-8 border-sage-400 dark:border-sage-500"
                           style={{ clipPath: "polygon(0 0, 100% 0, 100% 50%, 0 50%)" }}
@@ -110,7 +110,7 @@ export function LandingPage() {
                 </div>
 
                 {/* Bills list */}
-                <div className="mt-4 bg-white dark:bg-gray-900 rounded-lg p-3">
+                <div className="mt-4 bg-white dark:bg-gray-900 rounded-lg p-2 sm:p-3">
                   <div className="text-xs font-medium mb-2 text-sage-700 dark:text-sage-300">Recent Bills</div>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center text-xs">
@@ -146,10 +146,10 @@ export function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white dark:bg-gray-950">
+      <section className="py-12 md:py-16 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose UtiliTrack?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Why Choose UtiliTrack?</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             <Card className="bg-gradient-to-br from-sage-50 to-sage-100 dark:from-sage-950 dark:to-sage-900 border-0 shadow-md">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="rounded-full bg-sage-100 dark:bg-sage-800 p-4 mb-4">
@@ -174,7 +174,7 @@ export function LandingPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-olive-50 to-olive-100 dark:from-olive-950 dark:to-olive-900 border-0 shadow-md">
+            <Card className="bg-gradient-to-br from-olive-50 to-olive-100 dark:from-olive-950 dark:to-olive-900 border-0 shadow-md sm:col-span-2 md:col-span-1 sm:max-w-md sm:mx-auto md:max-w-none">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="rounded-full bg-olive-100 dark:bg-olive-800 p-4 mb-4">
                   <Calendar className="h-8 w-8 text-olive-600 dark:text-olive-400" />
@@ -190,11 +190,11 @@ export function LandingPage() {
       </section>
 
       {/* Sign In Section */}
-      <section id="sign-in-section" className="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="sign-in-section" className="py-12 md:py-16 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-md mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-6">Get Started Today</h2>
-            <p className="text-center text-muted-foreground mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6">Get Started Today</h2>
+            <p className="text-center text-muted-foreground mb-6 md:mb-8">
               Enter your email to start tracking your utility bills
             </p>
 
@@ -226,18 +226,18 @@ export function LandingPage() {
       {/* Footer */}
       <footer className="py-8 bg-gray-100 dark:bg-gray-950 mt-auto">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <p className="text-muted-foreground mb-2">
+          <p className="text-muted-foreground mb-4 md:mb-2">
             © 2025 UtiliTrack. A utility bill management solution for tracking and optimizing household expenses.
           </p>
-          <div className="flex justify-center space-x-4 text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-muted-foreground">
             <a href="#" className="hover:text-sage-600 transition-colors">
               Terms of Service
             </a>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <a href="#" className="hover:text-sage-600 transition-colors">
               Privacy Policy
             </a>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <a href="#" className="hover:text-sage-600 transition-colors">
               Contact Us
             </a>

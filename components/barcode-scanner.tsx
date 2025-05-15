@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Loader2, X } from "lucide-react"
+import { Loader2, X, RefreshCw } from "lucide-react"
 import { initBarcodeScanner, startBarcodeScanner, stopBarcodeScanner, parseBarcodeData } from "@/lib/barcode-service"
 
 interface BarcodeScannerProps {
@@ -15,6 +15,7 @@ export function BarcodeScanner({ onBarcodeDetected, onClose }: BarcodeScannerPro
   const scannerRef = useRef<HTMLDivElement>(null)
   const [isInitializing, setIsInitializing] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [cameraPermission, setCameraPermission] = useState<boolean | null>(null)
 
   useEffect(() => {
     let isMounted = true
@@ -23,6 +24,17 @@ export function BarcodeScanner({ onBarcodeDetected, onClose }: BarcodeScannerPro
       if (!scannerRef.current) return
 
       try {
+        // Check for camera permission
+        const permissionStatus = await navigator.permissions.query({ name: "camera" as PermissionName })
+
+        if (permissionStatus.state === "denied") {
+          setCameraPermission(false)
+          setError("Camera access denied. Please enable camera permissions in your browser settings.")
+          setIsInitializing(false)
+          return
+        }
+
+        setCameraPermission(true)
         await initBarcodeScanner(scannerRef.current)
 
         if (isMounted) {
@@ -50,6 +62,7 @@ export function BarcodeScanner({ onBarcodeDetected, onClose }: BarcodeScannerPro
         if (isMounted) {
           setError("Could not access camera. Please ensure you've granted camera permissions.")
           setIsInitializing(false)
+          setCameraPermission(false)
         }
       }
     }
@@ -62,6 +75,46 @@ export function BarcodeScanner({ onBarcodeDetected, onClose }: BarcodeScannerPro
       stopBarcodeScanner()
     }
   }, [onBarcodeDetected])
+
+  const retryScanner = () => {
+    setIsInitializing(true)
+    setError(null)
+    setCameraPermission(null)
+
+    // Small delay to ensure cleanup
+    setTimeout(() => {
+      if (scannerRef.current) {
+        initBarcodeScanner(scannerRef.current)
+          .then(() => {
+            setIsInitializing(false)
+            setCameraPermission(true)
+
+            startBarcodeScanner((result) => {
+              if (result.code) {
+                // Parse the barcode data
+                const parsedData = parseBarcodeData(result.code)
+
+                // Stop scanner after successful detection
+                stopBarcodeScanner()
+
+                // Call the callback with the parsed data
+                onBarcodeDetected({
+                  ...parsedData,
+                  barcode: result.code,
+                  format: result.format,
+                  confidence: result.confidence,
+                })
+              }
+            })
+          })
+          .catch(() => {
+            setError("Could not access camera. Please ensure you've granted camera permissions.")
+            setIsInitializing(false)
+            setCameraPermission(false)
+          })
+      }
+    }, 500)
+  }
 
   return (
     <Card className="relative overflow-hidden">
@@ -81,11 +134,22 @@ export function BarcodeScanner({ onBarcodeDetected, onClose }: BarcodeScannerPro
             <p className="text-muted-foreground">Initializing camera...</p>
           </div>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center h-[300px] bg-gray-100 dark:bg-gray-900">
-            <p className="text-red-500 mb-4">{error}</p>
-            <Button variant="outline" onClick={onClose}>
-              Close
-            </Button>
+          <div className="flex flex-col items-center justify-center h-[300px] bg-gray-100 dark:bg-gray-900 p-4">
+            <p className="text-red-500 mb-4 text-center">{error}</p>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={onClose}>
+                Cancel
+              </Button>
+              <Button onClick={retryScanner} className="bg-sage-600 hover:bg-sage-700">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Retry
+              </Button>
+            </div>
+            {!cameraPermission && (
+              <p className="text-xs text-muted-foreground mt-4 text-center">
+                You may need to update your browser settings to allow camera access
+              </p>
+            )}
           </div>
         ) : (
           <div className="relative">

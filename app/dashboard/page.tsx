@@ -8,26 +8,25 @@ import { BillsTable } from "@/components/bills-table"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { PlusCircle } from "lucide-react"
-// Add this import at the top
 import { DemoModeToggle } from "@/components/demo-mode-toggle"
 
 export default function DashboardPage() {
   return (
-    <div className="container mx-auto py-6 space-y-8">
-      <div className="flex flex-col gap-8 mb-8">
-        <div className="flex justify-between items-center">
+    <div className="container mx-auto py-6 space-y-8 px-4 sm:px-6">
+      <div className="flex flex-col gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">View insights about your utility expenses</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <DemoModeToggle />
             <Button
               asChild
               size="lg"
-              className="bg-sage-600 hover:bg-sage-700 text-white px-6 py-4 text-base h-auto rounded-full shadow-md transition-all duration-200 hover:shadow-lg"
+              className="bg-sage-600 hover:bg-sage-700 text-white px-6 py-4 text-base h-auto rounded-full shadow-md transition-all duration-200 hover:shadow-lg w-full sm:w-auto"
             >
-              <Link href="/upload" className="flex items-center">
+              <Link href="/upload" className="flex items-center justify-center">
                 <PlusCircle className="mr-2 h-5 w-5" />
                 Add New Bill
               </Link>
@@ -72,12 +71,12 @@ export default function DashboardPage() {
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <CardTitle>Recent Bills</CardTitle>
             <CardDescription>Your most recently added utility bills</CardDescription>
           </div>
-          <Button asChild variant="outline" size="sm">
+          <Button asChild variant="outline" size="sm" className="w-full sm:w-auto">
             <Link href="/history">View All</Link>
           </Button>
         </CardHeader>

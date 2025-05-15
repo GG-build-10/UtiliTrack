@@ -32,19 +32,19 @@ export function DashboardFilters() {
   return (
     <Card className="bg-white dark:bg-gray-950">
       <CardContent className="p-4">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <Tabs defaultValue="all" className="w-full sm:w-auto" onValueChange={setTimeRange}>
-            <TabsList className="grid w-full grid-cols-3 sm:w-auto">
+        <div className="flex flex-col gap-4">
+          <Tabs defaultValue="all" className="w-full" onValueChange={setTimeRange}>
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="all">All Time</TabsTrigger>
               <TabsTrigger value="year">Year</TabsTrigger>
               <TabsTrigger value="month">Month</TabsTrigger>
             </TabsList>
           </Tabs>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             {timeRange === "year" || timeRange === "month" ? (
               <Select value={year} onValueChange={setYear}>
-                <SelectTrigger className="w-[120px]">
+                <SelectTrigger className="w-full sm:w-[120px]">
                   <SelectValue placeholder="Select year" />
                 </SelectTrigger>
                 <SelectContent>
@@ -59,7 +59,7 @@ export function DashboardFilters() {
 
             {timeRange === "month" ? (
               <Select value={month} onValueChange={setMonth}>
-                <SelectTrigger className="w-[140px]">
+                <SelectTrigger className="w-full sm:w-[140px]">
                   <SelectValue placeholder="Select month" />
                 </SelectTrigger>
                 <SelectContent>
@@ -73,7 +73,7 @@ export function DashboardFilters() {
               </Select>
             ) : null}
 
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="w-full sm:w-auto">
               Apply Filters
             </Button>
           </div>
