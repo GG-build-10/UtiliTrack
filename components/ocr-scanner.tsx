@@ -5,15 +5,16 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Camera, ImageIcon, Loader2, RotateCw, RefreshCw } from "lucide-react"
+import { Camera, ImageIcon, Loader2, RotateCw, RefreshCw, X } from "lucide-react"
 import { extractTextFromImage, extractDataFromOcrText } from "@/lib/ocr-service"
 
 interface OcrScannerProps {
   onTextExtracted: (text: string, data: Record<string, string>) => void
   onImageCaptured: (imageFile: File) => void
+  onClose: () => void
 }
 
-export function OcrScanner({ onTextExtracted, onImageCaptured }: OcrScannerProps) {
+export function OcrScanner({ onTextExtracted, onImageCaptured, onClose }: OcrScannerProps) {
   const [isCapturing, setIsCapturing] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
@@ -165,7 +166,16 @@ export function OcrScanner({ onTextExtracted, onImageCaptured }: OcrScannerProps
   }
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden relative">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute right-2 top-2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full"
+        onClick={onClose}
+      >
+        <X className="h-4 w-4" />
+      </Button>
+
       <CardContent className="p-4">
         {isCapturing ? (
           <div className="relative">
